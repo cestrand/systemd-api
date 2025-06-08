@@ -1,6 +1,8 @@
 [package]
 name = "systemd-api"
 version = "0.1.0"
+authors = ["Marcin Kolenda"]
 edition = "2024"
+license = "Apache-2.0"
 
 [dependencies]
