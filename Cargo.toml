@@ -5,6 +5,9 @@ authors = ["Marcin Kolenda"]
 edition = "2024"
 license = "Apache-2.0"
 
+[lib]
+crate-type = ["rlib", "cdylib"]
+
 [dependencies]
 axum = "0.8"
 tokio = { version = "1", features = ["full"] }
