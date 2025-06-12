@@ -32,6 +32,16 @@ Interacting with systemd typically requires elevated privileges. You can:
 systemd-api = { path = "." }
 ```
 
+## Development
+
+This crate uses a small build script (`build.rs`) to generate Rust
+bindings for libsystemd at compile time. The script invokes
+[bindgen](https://docs.rs/bindgen) on `wrapper.h`, which simply includes
+the systemd headers from `/usr/include/systemd`. The generated bindings
+are written to the build output directory and compiled as part of the
+crate. For more details on build scripts, see the
+[Cargo documentation](https://doc.rust-lang.org/cargo/reference/build-scripts.html).
+
 ## License
 
 Copyright © 2025 Marcin Kolenda  
