@@ -6,8 +6,19 @@ pub mod version;
 
 include!("bindings.rs");
 
-use std::ffi::c_char;
+use crate::version::{systemctl_version, Version};
 
-pub extern "C" fn systemd_version() -> *const c_char {
-    return b"257.5\0".as_ptr() as *const c_char
+#[unsafe(no_mangle)]
+pub extern "C" fn c_systemd_version() -> *mut Version {
+    match systemctl_version() {
+        Ok(version) => Box::into_raw(Box::new(version)),
+        _ => std::ptr::null_mut(),
+    }
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn c_systemd_version_free(ptr: *mut Version) {
+    if !ptr.is_null() {
+        unsafe { drop(Box::from_raw(ptr)) }
+    }
 }
