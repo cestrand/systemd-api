@@ -1,5 +1,4 @@
-use std::{self, io::{self, BufRead}, process::Output};
-
+use serde::Serialize;
 
 #[derive(Debug)]
 pub struct CallSystemctlVersionOutput {
@@ -8,7 +7,7 @@ pub struct CallSystemctlVersionOutput {
 }
 #[derive(Debug)]
 pub enum CallSystemctlError {
-    CommandFailed(io::Error),
+    CommandFailed(std::io::Error),
     NonZeroExit(Option<i32>),
     MissingOutputLine(&'static str),
     InvalidUtf8(std::string::FromUtf8Error),
@@ -52,6 +51,8 @@ fn parse_version(s: &str) -> Option<(u32, u32)> {
     Some((version, patch))
 }
 #[derive(Debug)]
+#[derive(Serialize)]
+#[repr(C)]
 pub struct Version {
     pub version: u32,
     pub patch: u32,
