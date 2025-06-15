@@ -4,6 +4,8 @@ use axum::{
 use serde::{Deserialize, Serialize};
 use tracing::info;
 
+mod systemd_version;
+
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt()
@@ -13,6 +15,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(root))
         .route("/users", post(create_user))
+        .route("/version", get(systemd_version::get::handler))
         .fallback(anything_else);
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:3123").await.unwrap();
