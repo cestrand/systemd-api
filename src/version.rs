@@ -1,4 +1,5 @@
 use serde::Serialize;
+use utoipa::ToSchema;
 
 #[derive(Debug)]
 pub struct CallSystemctlVersionOutput {
@@ -52,6 +53,7 @@ fn parse_version(s: &str) -> Option<(u32, u32)> {
 }
 #[derive(Debug)]
 #[derive(Serialize)]
+#[derive(ToSchema)]
 #[repr(C)]
 pub struct Version {
     pub version: u32,

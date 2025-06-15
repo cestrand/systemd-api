@@ -3,14 +3,21 @@ use axum::{
 };
 use serde::{Deserialize, Serialize};
 use tracing::info;
+use utoipa::{OpenApi};
 
 mod systemd_version;
+
+#[derive(OpenApi)]
+#[openapi(paths(systemd_version::get::handler))]
+struct ApiDoc;
 
 #[tokio::main]
 async fn main() {
     tracing_subscriber::fmt()
     .with_max_level(tracing::Level::INFO)
     .init();
+
+    println!("{}", ApiDoc::openapi().to_pretty_json().unwrap());
 
     let app = Router::new()
         .route("/", get(root))
